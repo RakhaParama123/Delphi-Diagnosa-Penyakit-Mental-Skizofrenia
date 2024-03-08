@@ -1,0 +1,868 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls, ComCtrls, Menus;
+
+type
+  TDiagnosa = class(TForm)
+    PageDiagnosa: TPageControl;
+    Diagnosa: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    Hasil: TMemo;
+    Mulai: TButton;
+    Ya: TButton;
+    Pertanyaan: TEdit;
+    Nama: TLabeledEdit;
+    Umur: TLabeledEdit;
+    Domisili: TLabeledEdit;
+    MenuDiagnosa: TMainMenu;
+    Menu1: TMenuItem;
+    Petunjuk1: TMenuItem;
+    MenuUtama1: TMenuItem;
+    Keluar1: TMenuItem;
+    Tidak: TButton;
+    Input: TButton;
+    Reset: TButton;
+    MacamSkizofrenia: TMemo;
+    Obat: TMemo;
+    SaveandLoad1: TMenuItem;
+    Save: TMenuItem;
+    Load: TMenuItem;
+    SaveDialog1: TSaveDialog;
+    OpenDialog1: TOpenDialog;
+    procedure MulaiClick(Sender: TObject);
+    procedure YaClick(Sender: TObject);
+    procedure TidakClick(Sender: TObject);
+    procedure InputClick(Sender: TObject);
+    procedure ResetClick(Sender: TObject);
+    procedure Petunjuk1Click(Sender: TObject);
+    procedure MenuUtama1Click(Sender: TObject);
+    procedure Keluar1Click(Sender: TObject);
+    procedure SaveClick(Sender: TObject);
+    procedure LoadClick(Sender: TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  G : integer;
+  PO1,PO2,PO3,PO4,PO5,PO6 : integer;
+
+  Diagnosa: TDiagnosa;
+
+implementation
+
+uses unit2,unit3;
+
+{$R *.dfm}
+
+procedure TDiagnosa.MulaiClick(Sender: TObject);
+begin
+   G:=1;  //Untuk pertanyaan gejala skizofrenia
+  PO1:=0; //Untuk Skizofrenia Tak Terdefinisi
+  PO2:=0; //Untuk Skizofrenia Hebefrenik
+  PO3:=0; //Untuk Skizofrenia Paranoid
+  PO4:=0; //Untuk Skizofrenia Katatonik
+  PO5:=0; //Untuk Skizofrenia Simpleks
+  PO6:=0; //Untuk Skizofrenia Residual
+  Pertanyaan.Text:='1. Apakah pasien terlihat mengalami halusinasi?';
+
+
+end;
+
+procedure TDiagnosa.YaClick(Sender: TObject);
+begin
+if  G = 1 then
+  begin
+    G:=2;
+    Hasil.Lines.add('1.  Apakah pasien terlihat mengalami halusinasi(Ya)');
+    Pertanyaan.text:= '2. Apakah pasien terlihat berperilaku tidak jelas/aneh?';
+    PO1:= PO1+1;  //Poin bertambah setiap ada gejala yang benar/menekan tombol benar untuk masing-masing Skizofrenia
+    PO2:= PO2+1;  //Poin tidak bertambah jika gejala salah/menekan tombol salah
+    PO4:= PO4+1;
+  end
+  else if G = 2 then
+  begin
+    G:=3;
+    Pertanyaan.text:= '3. Apakah pasien sering terlihat tertawa kekanakan?';
+    Hasil.Lines.add('2. Apakah pasien terlihat berperilaku tidak jelas/aneh(Ya)');
+    PO1:= PO1+1;
+    PO2:= PO2+1;
+    PO4:= PO4+1;
+    PO5:= PO5+1;
+    PO6:= PO6+1;
+  end
+  else if G = 3 then
+  begin
+    G:=4;
+    Hasil.Lines.add('3. Apakah pasien terlihat tertawa kekanakan(Ya)');
+    Pertanyaan.text:= '4. Apakah pasien memiliki jalan pikir aneh?';
+    PO1:= PO1+1;
+    PO2:= PO2+1;
+  end
+  else if G = 4 then
+  begin
+    G:=5;
+    Hasil.Lines.add('4. Apakah pasien memiliki jalan pikir aneh(Ya)');
+    Pertanyaan.text:= '5. Apakah pasien terlihat mengalami mood datar/kedangkalan emosi?';
+     PO1:= PO1+1;
+    PO2:= PO2+1;
+    PO6:= PO6+1;
+  end
+  else if G = 5 then
+  begin
+    G:=6;
+    Hasil.Lines.add('5. Apakah pasien terlihat mengalami mood datar/kedangkalan emosi(Ya)');
+    Pertanyaan.text:= '6. Apakah pasien terlihat mengalami delusi akan dikejar?';
+      PO1:= PO1+1;
+    PO2:= PO2+1;
+    PO5:= PO5+1;
+  end
+  else if G = 6 then
+  begin
+  G:=7;
+  Hasil.Lines.add('6. Apakah pasien terlihat mengalami delusi akan dikejar(Ya)');
+    Pertanyaan.text:= '7. Apakah pasien terlihat berbicara tidak jelas?';
+     PO3:= PO3+1;
+     PO1:= PO1+1;
+
+  end
+  else if G = 7 then
+  begin
+   G:=8;
+   Hasil.Lines.add('7. Apakah pasien terlihat berbicara tidak jelas(Ya)');
+    Pertanyaan.text:= '8. Apakah pasien terlihat gelisah/takut?';
+     PO1:= PO1+1;
+    PO3:= PO3+1;
+
+  end
+  else if G = 8 then
+  begin
+   G:=9;
+   Hasil.Lines.add('8. Apakah pasien terlihat Gelisah/takut(Ya)');
+    Pertanyaan.text:= '9. Apakah pasien terlihat mengalami halusinasi auditorik/visual?';
+     PO1:= PO1+1;
+    PO3:= PO3+1;
+
+  end
+  else if G = 9 then
+  begin
+   G:=10;
+   Hasil.Lines.add('9. Apakah pasien terlihat mengalami halusinasi Auditorik/Visual(Ya)');
+    Pertanyaan.text:= '10. Apakah pasien mudah tersinggung?';
+     PO1:= PO1+1;
+    PO3:= PO3+1;
+  end
+  else if G = 10 then
+  begin
+    G:=11;
+    Hasil.Lines.add('10. Apakah pasien mudah tersinggung(Ya)');
+    Pertanyaan.text:= '11. Apakah pasien terlihat pendiam?';
+     PO1:= PO1+1;
+    PO3:= PO3+1;
+  end
+  else if G = 11 then
+  begin
+   G:=12;
+   Hasil.Lines.add('11. Apakah pasien terlihat pendiam(Ya)');
+    Pertanyaan.text:= '12. Apakah pasien terlihat enggan melakukan aktivitas?';
+     PO1:= PO1+1;
+    PO4:= PO4+1;
+    PO5:= PO5+1;
+  end
+  else if G = 12 then
+  begin
+  G:=13;
+  Hasil.Lines.add('12. Apakah pasien terlihat enggan melakukan aktivitas(Ya)');
+    Pertanyaan.text:= '13. Apakah pasien terlihat bersikap kaku?';
+     PO1:= PO1+1;
+    PO4:= PO4+1;
+  end
+  else if G = 13 then
+  begin
+     G:=14;
+     Hasil.Lines.add('13. Apakah pasien terlihat bersikap kaku(Ya)');
+    Pertanyaan.text:= '14. Apakah pasien terlihat tidak memiliki keyakinan diri?';
+     PO1:= PO1+1;
+    PO4:= PO4+1;
+  end
+  else if G = 14 then
+  begin
+   G:=15;
+   Hasil.Lines.add('14. Apakah pasien terlihat tidak memiliki keyakinan diri(Ya)');
+    Pertanyaan.text:= '15. Apakah pasien terlihat memiliki kemunduran kemauan?';
+     PO1:= PO1+1;
+    PO6:= PO6+1;
+     end
+  else if G = 15 then
+  begin
+    G:=16;
+    Hasil.Lines.add('15. Apakah pasien terlihat memiliki kemunduran kemauan(Ya)');
+    Pertanyaan.text:= '16. Apakah pasien pernah mengidap Skizofrenia lain?';
+     PO1:= PO1+1;
+    PO5:= PO5+1;
+   end
+   else if G = 16 then
+  begin
+    G:=17;
+    Hasil.Lines.add('16. Apakah pasien pernah mengidap Skizofrenia lain(Ya)');
+    Pertanyaan.text:= '17. Apakah pasien terlihat menarik diri dari keadaan sosial?';
+     PO1:= PO1+1;
+    PO6:= PO6+1;
+    end
+   else if G = 17 then
+   begin
+    G:=18;
+    Hasil.Lines.add('17. Apakah pasien terlihat menarik diri dari keadaan sosial(Ya)');
+     PO1:= PO1+1;
+    PO6:= PO6+1;
+    end
+   else if G = 18 then
+ if PO1 = 0 then
+   begin
+   Hasil.Lines.add('Pasien tidak memiliki gejala gangguan mental Scizofrenia');
+   end
+   else if PO1 > 5 then
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Tak Rinci');
+   end
+   else if PO2 > 2 then
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Hebefrenik');
+   end
+   else if PO3 > 2 then
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Paranoid');
+   end
+   else if PO4 > 2 then
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Katatonik');
+   end
+   else if PO5 > 2 then
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Simpleks');
+   end
+   else if PO6 > 2 then
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Residual');
+   end
+   else
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Tak Rinci');
+   end;
+   end;
+
+procedure TDiagnosa.TidakClick(Sender: TObject);
+begin
+
+if  G = 1 then
+  begin
+    G:=2;
+    Hasil.Lines.add('1. Apakah pasien terlihat mengalami halusinasi(Tidak)');
+    Pertanyaan.text:= '2. Apakah pasien terlihat berperilaku tidak jelas/aneh?';
+  end
+  else if G = 2 then
+  begin
+    G:=3;
+    Pertanyaan.text:= '3. Apakah pasien sering terlihat tertawa kekanakan?';
+    Hasil.Lines.add('2. Apakah pasien terlihat berperilaku tidak jelas/aneh(Tidak)');
+  end
+  else if G = 3 then
+  begin
+    G:=4;
+    Hasil.Lines.add('3. Apakah pasien terlihat tertawa kekanakan(Tidak)');
+    Pertanyaan.text:= '4. Apakah pasien memiliki jalan pikir aneh?';
+  end
+  else if G = 4 then
+  begin
+    G:=5;
+    Hasil.Lines.add('4. Apakah pasien memiliki jalan pikir aneh(Tidak)');
+    Pertanyaan.text:= '5. Apakah pasien terlihat mengalami mood datar/kedangkalan emosi?';
+
+  end
+  else if G = 5 then
+  begin
+    G:=6;
+    Hasil.Lines.add('5. Apakah pasien terlihat mengalami mood datar/kedangkalan emosi(Tidak)');
+    Pertanyaan.text:= '6. Apakah pasien terlihat mengalami delusi akan dikejar?';
+
+  end
+  else if G = 6 then
+  begin
+  G:=7;
+  Hasil.Lines.add('6. Apakah pasien terlihat mengalami delusi akan dikejar(Tidak)');
+    Pertanyaan.text:= '7. Apakah pasien terlihat berbicara tidak jelas?';
+
+  end
+  else if G = 7 then
+  begin
+   G:=8;
+   Hasil.Lines.add('7. Apakah pasien terlihat berbicara tidak jelas(Tidak)');
+    Pertanyaan.text:= '8. Apakah pasien terlihat gelisah/takut?';
+
+  end
+  else if G = 8 then
+  begin
+   G:=9;
+   Hasil.Lines.add('8. Apakah pasien terlihat Gelisah/takut(Tidak)');
+    Pertanyaan.text:= '9. Apakah pasien terlihat mengalami halusinasi auditorik/visual?';
+
+  end
+  else if G = 9 then
+  begin
+   G:=10;
+   Hasil.Lines.add('9. Apakah pasien terlihat mengalami halusinasi Auditorik/Visual(Tidak)');
+    Pertanyaan.text:= '10. Apakah pasien mudah tersinggung?';
+  end
+  else if G = 10 then
+  begin
+    G:=11;
+    Hasil.Lines.add('10. Apakah pasien mudah tersinggung(Tidak)');
+    Pertanyaan.text:= '11. Apakah pasien terlihat pendiam?';
+  end
+  else if G = 11 then
+  begin
+   G:=12;
+   Hasil.Lines.add('11. Apakah pasien terlihat pendiam(Tidak)');
+    Pertanyaan.text:= '12. Apakah pasien terlihat enggan melakukan aktivitas?';
+  end
+  else if G = 12 then
+  begin
+  G:=13;
+  Hasil.Lines.add('12. Apakah pasien terlihat enggan melakukan aktivitas(Tidak)');
+    Pertanyaan.text:= '13. Apakah pasien terlihat bersikap kaku?';
+  end
+  else if G = 13 then
+  begin
+     G:=14;
+     Hasil.Lines.add('13. Apakah pasien terlihat bersikap kaku(Tidak)');
+    Pertanyaan.text:= '14. Apakah pasien terlihat tidak memiliki keyakinan diri?';
+  end
+  else if G = 14 then
+  begin
+   G:=15;
+   Hasil.Lines.add('14. Apakah pasien terlihat tidak memiliki keyakinan diri(Tidak)');
+    Pertanyaan.text:= '15. Apakah pasien terlihat memiliki kemunduran kemauan?';
+     end
+  else if G = 15 then
+  begin
+    G:=16;
+    Hasil.Lines.add('15. Apakah pasien terlihat memiliki kemunduran kemauan(Tidak)');
+    Pertanyaan.text:= '16. Apakah pasien pernah mengidap Skizofrenia lain?';
+   end
+   else if G = 16 then
+  begin
+    G:=17;
+    Hasil.Lines.add('16. Apakah pasien pernah mengidap Skizofrenia lain(Tidak)');
+    Pertanyaan.text:= '17. Apakah pasien terlihat menarik diri dari keadaan sosial?';
+    end
+   else if G = 17 then
+    begin
+    G:=18;
+    Hasil.Lines.add('17. Apakah pasien terlihat menarik diri dari keadaan sosial(Tidak)');
+    end
+    else if G = 18 then
+   begin
+  if PO1 = 0 then
+   begin
+   Hasil.Lines.add('Pasien tidak memiliki gejala gangguan mental Scizofrenia');
+   end
+   else if PO1 > 5 then
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Tak Rinci');
+   end
+   else if PO2 > 2 then
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Hebefrenik');
+   end
+   else if PO3 > 2 then
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Paranoid');
+   end
+   else if PO4 > 2 then
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Katatonik');
+   end
+   else if PO5 > 2 then
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Simpleks');
+   end
+   else if PO6 > 2 then
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Residual');
+   end
+   else
+   begin
+   Hasil.Lines.add('Pasien mungkin mengalami gangguan mental Scizofrenia Tak Rinci');
+   end;
+   end;
+   end;
+procedure TDiagnosa.InputClick(Sender: TObject);
+begin
+Hasil.Lines.Add('Nama Pasien     :'); Hasil.Lines.Add(Nama.Text);
+Hasil.Lines.Add('Umur Pasien     :'); Hasil.Lines.Add(Umur.Text);
+Hasil.Lines.Add('Domisili Pasien :'); Hasil.Lines.Add(Domisili.Text);
+
+end;
+
+procedure TDiagnosa.ResetClick(Sender: TObject);
+begin
+   G:=0;
+  Pertanyaan.Text:= 'Silahkan Tekan Tombol Mulai';
+  Hasil.Lines.clear;
+  Hasil.Lines.add('Hasil Diagnosa');
+
+end;
+
+procedure TDiagnosa.Petunjuk1Click(Sender: TObject);
+begin
+Application.CreateForm(TPetunjuk,Petunjuk);
+Diagnosa.Hide;
+Petunjuk.show;
+
+end;
+
+procedure TDiagnosa.MenuUtama1Click(Sender: TObject);
+begin
+Application.CreateForm(TMainMenu,MainMenu);
+Diagnosa.Hide;
+MainMenu.show;
+
+end;
+
+procedure TDiagnosa.Keluar1Click(Sender: TObject);
+begin
+Application.Terminate;
+end;
+
+procedure TDiagnosa.SaveClick(Sender: TObject);
+begin
+if SaveDialog1.Execute then
+Hasil.Lines.SaveToFile(SaveDialog1.FileName + '.txt');
+end;
+
+procedure TDiagnosa.LoadClick(Sender: TObject);
+begin
+if OpenDialog1.Execute then
+Hasil.Lines.LoadFromFile(OpenDialog1.FileName);
+end;
+
+end.
+
+unit Unit2;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus, StdCtrls;
+
+type
+  TPetunjuk = class(TForm)
+    PetunjukProgram: TMemo;
+    MenuPetunjuk: TMainMenu;
+    Diagnosa1: TMenuItem;
+    Diagnosa2: TMenuItem;
+    MainMenu1: TMenuItem;
+    Keluar1: TMenuItem;
+    procedure Diagnosa2Click(Sender: TObject);
+    procedure MainMenu1Click(Sender: TObject);
+    procedure Keluar1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Petunjuk: TPetunjuk;
+
+implementation
+
+uses unit1,unit3;
+
+{$R *.dfm}
+
+procedure TPetunjuk.Diagnosa2Click(Sender: TObject);
+begin
+Application.CreateForm(TDiagnosa,Diagnosa);
+Petunjuk.Hide;
+Diagnosa.show;
+
+end;
+
+procedure TPetunjuk.MainMenu1Click(Sender: TObject);
+begin
+Application.CreateForm(TMainMenu,MainMenu);
+Petunjuk.Hide;    //menyembunyikan form yang diinginkan
+MainMenu.show;   //menunjukan form yang diinginkan
+
+end;
+
+procedure TPetunjuk.Keluar1Click(Sender: TObject);
+begin
+Application.Terminate; //Keluar dari aplikasi
+end;
+
+end.
+
+unit Unit3;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls;
+
+type
+  TMainMenu = class(TForm)
+    Akun: TButton;
+    Petunjuk: TButton;
+    Keluar: TButton;
+    procedure AkunClick(Sender: TObject);
+    procedure PetunjukClick(Sender: TObject);
+    procedure KeluarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  MainMenu: TMainMenu;
+
+implementation
+
+uses unit1,unit2,unit4;
+
+{$R *.dfm}
+
+procedure TMainMenu.AkunClick(Sender: TObject);
+begin
+Application.CreateForm(TAkun,Akun);
+MainMenu.Hide;
+Akun.show;
+end;
+
+procedure TMainMenu.PetunjukClick(Sender: TObject);
+begin
+Application.CreateForm(TPetunjuk,Petunjuk);
+MainMenu.Hide;
+Petunjuk.show;
+end;
+
+procedure TMainMenu.KeluarClick(Sender: TObject);
+begin
+Application.Terminate;
+end;
+
+end.
+unit Unit4;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, DB, ADODB;
+
+type
+  TAkun = class(TForm)
+    Masuk: TButton;
+    Keluar: TButton;
+    Pengunjung: TButton;
+    Daftar: TButton;
+    NamaAkun2: TEdit;
+    Password2: TEdit;
+    UlangPassword2: TEdit;
+    NamaAkun: TLabel;
+    Password: TLabel;
+    UlangPassword: TLabel;
+    adoconnectlogin: TADOConnection;
+    ADOTable1: TADOTable;
+    procedure KeluarClick(Sender: TObject);
+    procedure PengunjungClick(Sender: TObject);
+    procedure MasukClick(Sender: TObject);
+    procedure DaftarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Akun: TAkun;
+
+implementation
+uses unit1,unit6,unit7;
+
+{$R *.dfm}
+
+procedure TAkun.KeluarClick(Sender: TObject);
+begin
+Application.Terminate;
+end;
+
+procedure TAkun.PengunjungClick(Sender: TObject);
+begin
+Application.CreateForm(TDiagnosa,Diagnosa);
+Akun.Hide;
+Diagnosa.Show;
+end;
+
+procedure TAkun.MasukClick(Sender: TObject);
+begin
+ADOTable1.Refresh;
+ADOTable1.First;  //untuk cek data akun dari awal
+while not ADOTable1.Eof do    //eof(end of file) cek data akun yang terdaftar sampai akhir
+begin
+if (NamaAkun2.Text =ADOTable1['Nama_Akun']) and (Password2.Text =ADOTable1['Password']) and (UlangPassword2.Text =AdoTable1['Repeat_Password']) then
+begin
+Form7.Show;
+Akun.Hide;
+exit;
+end;
+ADOTable1.Next;
+if (NamaAkun2.Text =ADOTable1['Nama_Akun']) and (Password2.Text =ADOTable1['Password']) and (UlangPassword2.Text =AdoTable1['Repeat_Password']) then
+begin
+Form7.Show;
+Akun.Hide;
+exit;
+end;
+ADOTable1.Next;
+if (NamaAkun2.Text =ADOTable1['Nama_Akun']) and (Password2.Text =ADOTable1['Password']) and (UlangPassword2.Text =AdoTable1['Repeat_Password']) then
+begin
+Form7.Show;
+Akun.Hide;
+exit;
+end;
+if ADOTable1.Eof then
+begin
+MessageBox(handle,'Password atau user yang dimasukan salah','Error',MB_ICOnerror);
+NamaAkun2.Text := '';
+Password2.Text := '';
+UlangPassword2.Text := '';
+NamaAkun2.SetFocus;
+end;
+end;
+end;
+procedure TAkun.DaftarClick(Sender: TObject);
+begin
+Application.CreateForm(TDaftar,Daftar);
+Daftar.Show;
+Akun.Hide;
+end;
+end.
+unit Unit6;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DB, ADODB, StdCtrls, ExtCtrls;
+
+type
+  TDaftar = class(TForm)
+    Daftar: TButton;
+    Keluar2: TButton;
+    ADOConnection1: TADOConnection;
+    NamaAkun2: TEdit;
+    Password2: TEdit;
+    UlangPassword2: TEdit;
+    NamaAkun: TLabel;
+    Password: TLabel;
+    UlangPassword: TLabel;
+    ADOTable1: TADOTable;
+    procedure Keluar2Click(Sender: TObject);
+    procedure DaftarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Daftar: TDaftar;
+
+implementation
+uses unit4,unit7;
+{$R *.dfm}
+
+procedure TDaftar.Keluar2Click(Sender: TObject);
+begin
+Application.Terminate;
+end;
+
+procedure TDaftar.DaftarClick(Sender: TObject);  //procedure pendaftaran akun ke dalam microsoft access
+begin
+ADOTable1.Open;
+ADOTable1.Append;
+ADOTable1.FieldByName('Nama_Akun').AsString:=NamaAkun2.Text;
+ADOTable1.FieldByName('Password').AsString:=Password2.Text;
+ADOTable1.FieldByName('Repeat_Password').AsString:=UlangPassword2.Text;
+ADOTable1.Post;
+MessageDlg('Data Berhasil Disimpan! Mohon keluar aplikasi sebelum melakukan login',mtInformation,[mbOK], 0);
+NamaAkun2.text := '';
+Password2.text := '';
+UlangPassword2.text := '';
+NamaAkun2.SetFocus;
+end;
+end.
+unit Unit7;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus, ComCtrls, StdCtrls, DB, ADODB, Grids, DBGrids;
+
+type
+  TForm7 = class(TForm)
+    MainMenu1: TMainMenu;
+    Menu1: TMenuItem;
+    MenuUtama1: TMenuItem;
+    Exit1: TMenuItem;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    nama: TLabel;
+    umur: TLabel;
+    domisili: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    ComboBox1: TComboBox;
+    ComboBox2: TComboBox;
+    ComboBox3: TComboBox;
+    ComboBox4: TComboBox;
+    ComboBox5: TComboBox;
+    ComboBox6: TComboBox;
+    ComboBox7: TComboBox;
+    ComboBox8: TComboBox;
+    ComboBox9: TComboBox;
+    ComboBox10: TComboBox;
+    ComboBox11: TComboBox;
+    ComboBox12: TComboBox;
+    ComboBox13: TComboBox;
+    ComboBox14: TComboBox;
+    ComboBox15: TComboBox;
+    ComboBox16: TComboBox;
+    Memo1: TMemo;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Button1: TButton;
+    Button2: TButton;
+    Label1: TLabel;
+    ComboBox17: TComboBox;
+    ADOConnection1: TADOConnection;
+    ADOTable1: TADOTable;
+    OpenDialog1: TOpenDialog;
+    DataSource1: TDataSource;
+    DBGrid1: TDBGrid;
+    Button3: TButton;
+    ADOConnection2: TADOConnection;
+    ADOTable2: TADOTable;
+    DataSource2: TDataSource;
+    DBGrid2: TDBGrid;
+    Button4: TButton;
+    Label2: TLabel;
+    ComboBox18: TComboBox;
+    procedure Exit1Click(Sender: TObject);
+    procedure MenuUtama1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form7: TForm7;
+
+implementation
+
+uses Unit3;
+
+{$R *.dfm}
+
+procedure TForm7.Exit1Click(Sender: TObject);
+begin
+Application.Terminate;
+end;
+
+procedure TForm7.MenuUtama1Click(Sender: TObject);
+begin
+Application.CreateForm(TMainMenu,MainMenu);
+Form7.Hide;
+MainMenu.show;
+end;
+
+procedure TForm7.Button1Click(Sender: TObject);  //Procedure menyimpan data pasien bagi admin
+begin
+ADOTable1.Append;
+ADOTable1.FieldByName('nama').AsString := Edit1.text;
+ADOTable1.FieldByName('umur').AsString := Edit2.text;
+ADOTable1.FieldByName('domisili').AsString := Edit3.text;
+ADOTable1.FieldByName('mengalami_halusinasi').AsString := combobox1.text;
+ADOTable1.FieldByName('berperilaku_tidak_jelas').AsString := combobox2.text;
+ADOTable1.FieldByName('tertawa_kekanakan').AsString := combobox3.text;
+ADOTable1.FieldByName('jalan_pikir_aneh').AsString := combobox4.text;
+ADOTable1.FieldByName('mengalami_mood_datar').AsString := combobox5.text;
+ADOTable1.FieldByName('mengalami_delusi_akan_dikejar').AsString := combobox6.text;
+ADOTable1.FieldByName('berbicara_tidak_jelas').AsString := combobox7.text;
+ADOTable1.FieldByName('gelisah/takut').AsString := combobox8.text;
+ADOTable1.FieldByName('halusinasi_auditorik/visual').AsString := combobox9.text;
+ADOTable1.FieldByName('mudah_tersinggung').AsString := combobox10.text;
+ADOTable1.FieldByName('terlihat_pendiam').AsString := combobox11.text;
+ADOTable1.FieldByName('enggan_melakukan_aktivitas').AsString := combobox12.text;
+ADOTable1.FieldByName('bersikap_kaku').AsString := combobox13.text;
+ADOTable1.FieldByName('tidak_memiliki_keyakinan_diri').AsString := combobox14.text;
+ADOTable1.FieldByName('memiliki_kemunduran_kemauan').AsString := combobox15.text;
+ADOTable1.FieldByName('pernah_mengidap_skizofrenia_lain').AsString := combobox16.text;
+ADOTable1.FieldByName('menarik_diri_dari_keadaan_sosial').AsString := combobox17.text;
+ADOTable1.FieldByName('jenis_skizofrenia').AsString := combobox18.text;
+ADOTable1.Post;
+edit1.text := '';
+edit2.text := '';
+edit3.text := '';
+end;
+
+procedure TForm7.Button2Click(Sender: TObject);
+begin
+if OpenDialog1.execute then
+Memo1.Lines.LoadFromFile(OpenDialog1.FileName);
+end;
+
+procedure TForm7.Button3Click(Sender: TObject);
+begin
+Adotable1.delete;
+end;
+procedure TForm7.Button4Click(Sender: TObject);
+begin
+Adotable2.delete;
+end;
+end.
